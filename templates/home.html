@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Todo App</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 500px;
+            margin: 60px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            gap: 10px;
+        }
+
+        input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            background: #4CAF50;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        li {
+            background: #fafafa;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.3s;
+        }
+
+        li:hover {
+            transform: scale(1.02);
+            background: #f0f0f0;
+        }
+
+        .delete {
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .delete:hover {
+            background: darkred;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>My Todo List 🚀</h1>
+
+        <!-- ADD TASK FORM -->
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="title" placeholder="Enter task..." required>
+            <button type="submit">Add</button>
+        </form>
+
+        <!-- TASK LIST -->
+        <ul>
+            {% for task in tasks %}
+            <li>
+                <span>{{ task.title }}</span>
+
+                <!-- REAL DELETE (DATABASE) -->
+                <a href="/delete/{{ task.id }}/">
+                    <button class="delete">X</button>
+                </a>
+            </li>
+            {% empty %}
+            <p>No tasks yet</p>
+            {% endfor %}
+        </ul>
+
+    </div>
+
+</body>
+
+</html>
